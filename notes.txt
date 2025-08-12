@@ -32,26 +32,77 @@ Onchain Notes:
 - On top of that, separate tokens locked with the validator also unlock in February to the tune of 30mm units (~165m). These are not mentioned at all in the Tokenomist.
 - Moreover, in about half a year 75mm units has been inflated, making the inflation rate about 7.5x the stated rate (150mm vs 20mm).
 
+- There is some obfuscation. Beneficiaries of locked tokens are hashed, the genesis distribution was widely distributed across over 100 wallets.
+
 
 
 address	balance
 0x3107e481dfc6818c711395b3c8adc591bae8a6af	19865953
 -> just staked 17m and held 2m
+held: 2m
+staked: 17m
 
 0x32d39bd31bde7a41c9c39d60cdc7db838d815bbd	19858782
 -> just staked 18m, unstaked 3m, so net staked 15m and still holds 6.2m
 -> sent 1.3m to flowtraders and sent 200k to bonus distributor 0x2f925542d1689258Be55F87e17FCd8B7480d76f0
+held: 6m
+staked: 18m
 
 0x40b57d150909dd4b63bea55e24c3e1ec18225f9f	19566528
--> just staked 17m and held 2m
+-> sent all to 0x3e1096A1372DBa6F4E08f0d2B42A69189a73b3de vesting creator
+-> vesting creator holds 9.6m units and sent 10m to timelock vesting
+held: 10m
+timelock: 10m
 
-0xd2d81f6e3072911dc88c0ad0515e60fb4cd6a5f6	19558938 -> just staked 17m and held 2m
-0x207b3cd18bcf5510a5126eb19723a54307db1f39	19463267 -> just staked 17m and held 2m
-0x06072e1314a2e3f83edf627ff6778823b3da9855	19265983 -> just staked 17m and held 2m
-0xb58205cdcb629dacc850995e0ba58549bb21ecd1	19213298 -> just staked 17m and held 2m
+0xd2d81f6e3072911dc88c0ad0515e60fb4cd6a5f6	19558938
+-> sent to 0xdAeE908D7Af0ac30A4d3a5FC227B936d18093411 who holds 50k and sends like 7m to timelock vesting
+-> and 5.4m to 0xe0b8eaf482a291823A91BF53AfeC7096DCa9D359 who put 18m in timelock vesting
+-> and 4m to 0x100b77281763Bda2A8512bD0Bd3078D3D4dF5498 who holds it
+held: 4m
+timelock: 18m
+
+0x207b3cd18bcf5510a5126eb19723a54307db1f39	19463267
+-> sent 4m to timelock vaults
+-> sent 4m to 0xA2A468C3c30da2cD02Bc9db0bF2F4aF4c0e83DCb who holds it
+-> sent 4m to 0xb61Ef3983a3786257E4e315f4F88C5156407e73c who holds it
+-> sent 4m to 0xA7d7030a9e4B212C16a2759e14940050f88Cc980 who holds it
+-> sent 4m to 0xFB47E8A41714bD2907630db32f47491657bD1863 who holds it
+held: 16m
+timelock: 4m
+
+0x06072e1314a2e3f83edf627ff6778823b3da9855	19265983
+-> sent all to 0xDa424Fa3b82A542ab42E9a5CaCDd2c8677b328cD who holds 1m
+-> and sent 15m to timelock vaults
+held: 1m
+timelock: 15m
+
+0xb58205cdcb629dacc850995e0ba58549bb21ecd1	19213298
+-> sent all to 0x7487E232Fa163491B4325349eAb757670f8222EF who holds 11m
+-> and sent 8m to timelock
+held: 11m
+timelock: 8m
+
 0x42b8ab83bdef9badaec2e59c397fdac74f0b9b95	19113225
+-> sent 5m to 0x66Dd53f5d0a91E16Ed5f1c8d40b30722B9BB57f1 who holds it
+-> staked 16m and unstaked a bunch
+held: 5m
+
 0x227fb43062aeaa87c9feaba46758f6e6396c034c	19085913
+-> sent all to 0x25033EF4E0cB2096fE19B2A4DaEC849875E22539 who holds 14m
+-> sent 4.5m to timelocks
+held: 14m
+timelock: 4.5m
+
 0x4cb92d116af40080776f9d91a66ca1b710ae19cd	18705789
+-> sent it all to 0xd5103E03f03A0805D6De7d4a346071E5A7a780Af who holds it
+-> who sent 3m to 0x95E46aDFd075c8CCE195B4905A78d57e6231C670 who holds it
+-> who sent 3m to 0x52C859Fc9aDB90264565284e63579682C88516Be who holds it
+-> who sent 3m to 0xe311aA709dC121E2039cf6116036B687d62200B5 who holds it
+-> who sent 3m to 0x92919e47e4C199c8eCAcd0C74Cd40C661c6524fE who holds it
+-> who sent 3m to 0xaB20C1e8E75c8Ed021B8A907297C54294D7415cC who holds it
+-> who sent 1m to 0x000ae8A68F05dB05a3fdc7c807483044Adc88C28 who holds it
+held: 18m
+
 0xcd03014bb57b09c0c168b8560deaee692552cccd	18641387
 0xc3f3a6fc969c77543d39e5ff1649185f218e0422	18524856
 0x40c590af59f3a869d6e3c9008e48289fcd8d29d2	17953083
