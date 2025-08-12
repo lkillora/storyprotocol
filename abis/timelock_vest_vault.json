@@ -1,0 +1,696 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_stakingContract",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_validatorWhitelist",
+        "type": "address"
+      },
+      {
+        "internalType": "uint64",
+        "name": "_unlockDurationMonths",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "_cliffDurationMonths",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "_cliffPercentage",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "_stakingRewardStart",
+        "type": "uint64"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_beneficiary",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_allocation",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "AmountMustBeGreaterThanZero",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "FailedCall",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "IncorrectFeeAmount",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "needed",
+        "type": "uint256"
+      }
+    ],
+    "name": "InsufficientBalance",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InsufficientBalanceInVault",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NotBeneficiary",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "claimable",
+        "type": "uint256"
+      }
+    ],
+    "name": "NotEnoughStakingRewardToken",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "claimable",
+        "type": "uint256"
+      }
+    ],
+    "name": "NotEnoughUnlockedTokens",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "withdrawable",
+        "type": "uint256"
+      }
+    ],
+    "name": "NotEnoughWithdrawableTokens",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ReentrancyGuardReentrantCall",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "StakingRewardsNotClaimableYet",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TokensNotUnlockedYet",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ValidatorNotWhitelisted",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "beneficiary",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "StakingRewardsClaimed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "creator",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "beneficiary",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "allocation",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "start",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "durationMonths",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "end",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "cliff",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "cliffMonths",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "cliffPercentage",
+            "type": "uint64"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct ITimelockVestVault.UnlockingSchedule",
+        "name": "unlockingSchedule",
+        "type": "tuple"
+      }
+    ],
+    "name": "TimelockVestVaultCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "beneficiary",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "validator",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "TokensStaked",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "beneficiary",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "validator",
+        "type": "bytes"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "TokensUnstakeRequested",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "beneficiary",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "UnlockedTokensWithdrawn",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "HUNDRED_PERCENT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "STAKING_CONTRACT",
+    "outputs": [
+      {
+        "internalType": "contract IIPTokenStakingWithFee",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "STAKING_REWARD_CLAIMABLE_START_TIME",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "START_TIME",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "VALIDATORS_WHITELIST",
+    "outputs": [
+      {
+        "internalType": "contract IValidatorWhitelist",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "allocation",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "beneficiary",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "claimStakingRewards",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "claimableStakingRewards",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "timestamp",
+        "type": "uint64"
+      }
+    ],
+    "name": "getElapsedMonths",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "elapsedMonths",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "durationMonths",
+        "type": "uint64"
+      }
+    ],
+    "name": "getEndTimestamp",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "endTimestamp",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getStakeRewardReceiverAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getStakingRewardClaimableStartTime",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "timestamp",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getStartTime",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "timestamp",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "timestamp",
+        "type": "uint64"
+      }
+    ],
+    "name": "getUnlockedAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "unlockedAmount",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getUnlockingSchedule",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "start",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "durationMonths",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "end",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "cliff",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "cliffMonths",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "cliffPercentage",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ITimelockVestVault.UnlockingSchedule",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "validator",
+        "type": "bytes"
+      }
+    ],
+    "name": "stakeTokens",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "stakingRewardReceiver",
+    "outputs": [
+      {
+        "internalType": "contract IStakeRewardReceiver",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "unlocking",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "start",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "durationMonths",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "end",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "cliff",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "cliffMonths",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "cliffPercentage",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "validator",
+        "type": "bytes"
+      }
+    ],
+    "name": "unstakeTokens",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdrawUnlockedTokens",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawableUnlockedTokens",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawn",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
+  }
+]

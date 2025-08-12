@@ -1,0 +1,7 @@
+requests
+python-dotenv
+pandas
+web3
+eth-abi
+safe-cli
+matplotlib
