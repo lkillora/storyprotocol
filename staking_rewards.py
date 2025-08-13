@@ -129,7 +129,7 @@ def bytecode(address):
 
 
 
-'def find_staking_recipients():
+def find_staking_recipients():
     data = pd.read_csv("savedata/all_staking_contracts_uploaded.csv")
     addresses = data["CREATED_ADDRESS"].tolist()
     recipients = {}
@@ -285,20 +285,6 @@ def bytecode(address):
     plt.gca().xaxis.set_major_locator(mdates.MonthLocator(interval=4))
     plt.show()
 
-    import requests
-    response = requests.get('https://raw.githubusercontent.com/piplabs/story-geth/refs/heads/main/core/gendata/story/genesis.json')
-    genesis = response.json()
-    accs = genesis['alloc']
-    balances = {}
-    for a in accs:
-        balance = round(int(accs[a]['balance'], 16)/1e18)
-        if balance >= 1000:
-            balances[a] = balance
-    balances = pd.DataFrame.from_dict(balances, orient='index').reset_index()
-    balances.columns = ['address', 'balance']
-    balances.sort_values('balance', ascending=False, inplace=True)
-    balances.to_csv('./savedata/genesis_balances.csv', index=False)
-
     contracts = [
         '0xEB602035F7D6e91c5b39C7c9E87055df546b16FF',
         '0x5599644993C2056c39bFf55c8578f898F70DFbc9',
@@ -350,6 +336,20 @@ def bytecode(address):
 
 
     import requests
+    response = requests.get('https://raw.githubusercontent.com/piplabs/story-geth/refs/heads/main/core/gendata/story/genesis.json')
+    genesis = response.json()
+    accs = genesis['alloc']
+    balances = {}
+    for a in accs:
+        balance = round(int(accs[a]['balance'], 16)/1e18)
+        if balance >= 1000:
+            balances[a] = balance
+    balances = pd.DataFrame.from_dict(balances, orient='index').reset_index()
+    balances.columns = ['address', 'balance']
+    balances.sort_values('balance', ascending=False, inplace=True)
+    balances.to_csv('./savedata/genesis_balances.csv', index=False)
+
+    import requests
     response = requests.get('https://www.storyscan.io/api/v2/addresses/')
     accs = response.json()['items']
     all_accs = accs.copy()
@@ -371,3 +371,9 @@ def bytecode(address):
     all_accs_df = all_accs_df.groupby('hash').first().reset_index()
     all_accs_df['num_tokens'] = all_accs_df['coin_balance'].apply(lambda c: round(int(c)/1e18))
     print(all_accs_df['num_tokens'].sum())
+
+    all_accs_df['hash'] = all_accs_df['hash'].str.lower()
+    balances['address'] = balances['address'].str.lower()
+    genesis_accs = pd.merge(all_accs_df, balances, right_on='address', left_on='hash', how='inner')
+    genesis_accs['num_tokens'].sum()
+

@@ -26,15 +26,20 @@ rewards manager = 0xe66F876EaeBd29cfE36737458A1B784A135F0437
 
 
 
-Onchain Notes:
+Onchain Notes (Trade Opportunity Before Feb):
 - According to the onchain vesting contracts, there's a massive cliff unlock in February of 62mm units (~$330m) from the vesting contracts.
 - Alto pointed out that the Tokenomist has it as linear rather than cliff, so perhaps this is not widely known.
-- On top of that, separate tokens locked with the validator also unlock in February to the tune of 30mm units (~165m). These are not mentioned at all in the Tokenomist.
-- Moreover, in about half a year 75mm units has been inflated, making the inflation rate about 7.5x the stated rate (150mm vs 20mm).
+- On top of that, separate tokens locked with the validator also unlock in February (within a couple of days of the other unlock) to the tune of 30mm units (~165m). These are not mentioned at all in the Tokenomist.
+- Moreover, in about half a year 75mm units have been emitted, making the inflation rate about 7.5x the stated rate (150mm vs 20mm).
 
-- There is some obfuscation. Beneficiaries of locked tokens are hashed, the genesis distribution was widely distributed across over 100 wallets.
+- There is some intentional obfuscation. Beneficiaries of locked tokens are hashed, the genesis balances were widely distributed across over 100 wallets, and there are more than 260 timelock vesting contracts with some being created in the past two weeks even though the schedule matches some of the older ones from February.
 
 
+genesis supply: 1b
+current supply: 1.08b
+120m still unlocked as balance in genesis wallet
+500m staked
+250m sent to timelocks and (240m staked or something like that)
 
 address	balance
 0x3107e481dfc6818c711395b3c8adc591bae8a6af	19865953
@@ -100,98 +105,368 @@ timelock: 4.5m
 -> who sent 3m to 0xe311aA709dC121E2039cf6116036B687d62200B5 who holds it
 -> who sent 3m to 0x92919e47e4C199c8eCAcd0C74Cd40C661c6524fE who holds it
 -> who sent 3m to 0xaB20C1e8E75c8Ed021B8A907297C54294D7415cC who holds it
--> who sent 1m to 0x000ae8A68F05dB05a3fdc7c807483044Adc88C28 who holds it
+-> who sent 1m to 0x000ae8A68F05dB05a3fdc7c807483044Adc88C28 who holds it (received 2m extra and deposited it to timelocks)
 held: 18m
 
 0xcd03014bb57b09c0c168b8560deaee692552cccd	18641387
+-> sent 4m to 0xBC4aC80d3c430d59ea36931a01ca7b053430f6EF who holds it
+-> sent 4m to 0xE688f99D85A3f3912aA4e193D34A0aca749Ec684 who holds it
+-> sent 4m to 0xc2ba0C719144CF967d1308117303F77090ECbE3d who holds it
+-> sent 4m to 0x642f7675cFb8E7287229Fd496f08ec30d73a5bFF who holds it
+-> and 2.5m to timelock
+timelock: 2.5m
+
 0xc3f3a6fc969c77543d39e5ff1649185f218e0422	18524856
+-> held 0.5m and sent 18m to staking
+held: 0.5m
+
 0x40c590af59f3a869d6e3c9008e48289fcd8d29d2	17953083
+-> held 0.5m and sent 18m to staking
+held: 0.5m
+
 0x3c30859fe8de34c99b49d0afe7ac9ed148e1c315	17757985
+-> held 1m and sent 17m to staking
+held: 1m
+
 0xcc5c7794c51489c524adbf01917616fa008b24d4	17631845
+-> holds 1m, sent 1.1m to timelock, sent 1.5m to bybit, sent 7.5m to bc.com, sent 4.5m to selini
+circ: 15m
+
 0x6530b70a9583b2e9229cca10c19a13f59ef6f410	17330611
+-> sent 7m to selini, 1.5 to bc.com
+-> sent 9m to timelock
+timelock: 9m
+circ: 8m
+
 0xb4b7aa40d5099f2dfb88023e96ef9e724235fe7b	17300728
+-> sent 14.5m to timelock
+-> sent 3.5m to safe 0xa2AEc18b332f39172cA38d05809D2e3284513665
+-> which sent 2m to 0x006B1A78e57ae93dE6D59f743D2D57Fc564FD2Ce (genesis wallet)
+-> which sent 3m to 0x364d7ea13D6A0C4a5853571F8655085D53773bdc who sent 15m to timelocks
+timelock: 29m
+
 0x30bb2e4325b379d1fff50526c11215a3e72c3ccb	17040926
+-> sent 3m to 0x60D47251DA5d5DD24B2F5F201E6dF3a642f1058a which sent 10m to timelock
+-> sent 2m to 0x892033f3f116b6E41DF99bDB01157e1f703ad8b6 which holds it
+-> sent 3m to 0x4Fec9b2043c35BfF0103508dEB0E1347C297d5a1 which holds it
+-> sent 3m to 0xb3B1E4E92EA5F6795a1eeA6b7e5218f82007E118 which holds it
+-> sent 3m to 0x83a7f8a3EcE0EC11879A440D04C12d12b8540CB2 which holds it
+-> sent 3m to 0x777954233236923d109Ed14da78A53173C6828D0 which holds it
+timelock: 10m
+held: 16m
+
 0x48fda21999480516ce216405c5319ebc38f01c14	16765504
+-> 1m to timelock
+-> 4m to 0x8E2f96e34c78FE9AF23EB41C3FF4e8f66A92a3e5 who holds it
+-> 4m to 0x6695e4407f5cbca8F42826b157AC95215a628637 who holds it
+-> 4m to 0x7D7138B71B0f9fe716192ee05401Cd310Fcb8d4c who holds it
+-> 4m to 0x8E2f96e34c78FE9AF23EB41C3FF4e8f66A92a3e5 who sent 20m to timelock
+held: 13m
+
 0xea842ccb1bb2c79797b0c1819bd1f4af52ffecfe	16764157
+-> sent 6m to timelock
+-> held 10m
+held: 10m
+timelock: 6m
+
 0x9d7c7d4130d393942c6914759921ead3b067474b	16702254
+-> holds 8m and sent 8m to airdrop 100 (0xF07720D5fCAB350071821127eBeDF5E56Fd9695d)
+circ: 8m
+
 0x7da3fe88c1db86ef71879c0e9314fde4bc7f34ac	16624175
+-> sent 7m to timelock
+-> held 10m
+held: 10m
+
 0xd009f6544324a3686bed433bc874e735d0e616a6	16067610
+-> held 7m and staked 3.5m
+-> sent 5m to 0x66Dd53f5d0a91E16Ed5f1c8d40b30722B9BB57f1 who held it
+held: 12m
+
 0xeb602035f7d6e91c5b39c7c9e87055df546b16ff	16063154
+-> held 8m
+-> sent 8m to airdrop 30 (0xB7aC55bEeF2008F97f771c8cAD4bD4a45A8c22B4)
+held: 8m
+circ: 8m
+
 0x260f0ec32c13450fba1f2b9a3ea74301fb8e733e	15778545
+-> sent 8m to staking
+-> held 8m
+held: 8m
+
 0xf419b020aa8021e2fbcae0cee032975314b07550	15702520
+-> held 10m
+-> sent to 0xa037C3dC33CCB5099338AC5AFBe9D1C234C6A367 4m
+held: 10m
+
 0x0cacb84e5ebb62246f2d3a8446e1ae00cd7bfec0	15533403
+-> 12m to staking and held 3m
+held: 3m
+
 0xa55256c7a140c15150921d8d416387d61f1aff61	15076329
+-> held: 4m
+-> sent 5m to coinbase
+-> sent 14m to staking and unstaked a bunch
+-> sent 5m through many loops back to genesis wallet: 0xa55256C7a140C15150921D8D416387D61F1AFF61
+-> split 9m across 3 wallets
+
 0xaafc8787876fd9d43852edd3a935479024858022	14689488
+-> 4m to 0xba775391B99aB5F55B8eAeB73770cfbAAe38CcE2 who held it
+-> 4m to 0xd48Dc36e479297C2Eb54F1c7EE9501e72EC792a3 who held it
+-> 2m to 0xe0b8eaf482a291823A91BF53AfeC7096DCa9D359 who sent 20m to timelock
+-> 1m to 0xb70C548332C28970D8c88F7E5c74D5EB61239CaE who held it
+-> 4m to timelock
+held: 9m
+
 0xdd3353120e044ed0af052c453062ef4f253caede	14416657
+-> 8m to timelock
+-> sent to timelock through a link
+-> 5m held
+held: 5m
+
 0xbb5400b6a7e6e4766f701d1dd4e19116f3c27b91	13984970
+-> held 7m
+-> sent 7m to airdrop 30 (0xB7aC55bEeF2008F97f771c8cAD4bD4a45A8c22B4)
+held: 7m
+
 0x38865efdd19b8ecd0dede3422d0c51580aafd2e5	13785388
+-> held 7m
+-> sent to airdrop 100 (0xB7aC55bEeF2008F97f771c8cAD4bD4a45A8c22B4)
+
 0xa2d324ab7f596717a36293208b283c399eaf3a7b	13207728
+-> staked all
+
 0xb43404bcab3a423776575fb2703dfd084b1fbc92	13147480
+-> sent all but 1m to timelocks
+
 0x5599644993c2056c39bff55c8578f898f70dfbc9	12814609
+-> held 8m
+-> sent 4m to airdrop 30 (0xB7aC55bEeF2008F97f771c8cAD4bD4a45A8c22B4)
+
 0x744933cfbb35106d4b18724091fc6423a6089398	12702363
+-> held 12m split across 3 wallets
+
 0x392095d776b74eb0982cf6972219af989653efc6	12657496
+-> sent to timelocks
+
 0xef54e2bd253f62a157f758c951c01fccac89965a	12143763
+-> held 4m, stake 8m
+
 0x717dc476dc5998d037f3bda71234edc854f9cf04	11909886
+-> held 4m, sent 8m to timelocks
+
 0x33a1aad442f941908e3a6df1c5ba9e3cb939d3c9	10904479
+-> held 4m, sent 8m to staking
+
 0xe879a959483efffa9a9815a98ff1292b5366c597	10870639
+-> held 6m, sent 3m to timelock
+
 0x011e0ff512eac594d85d84af6f17c517f3a8683f	10790011
+-> held 6m, sent to other one that sent to timelock
+
 0xbb18cf6fb9e7068166cd144ed8ecfb30d4b89b0a	10718281
+-> sent all to timelock
+
 0xc172afd13550eff273b20fed67001c5d1a113ab1	10353292
+-> held 2m, 8m to staking
+
 0xc1344ab7b6ebe62e677536819062d2009249e945	10333710
+-> held 3m, sent 7m to Airdrop (10 units) 0x880A10c5b024aD39450e3381A734ce0ec0b8b197
+
 0x4ef883b53724f5087dee0a827691f585d0085095	10257379
+-> Airdrop (10 units)
+
 0xa72941218ca3953c607efabf39246a416a7a74fc	10136412
+-> sent to all timelock
+
 0x34f7a3463728d378e263fc5015dd75884b505bd1	10027821
+-> sent to all timelock
+
 0xc7c942a46ba3b7cfba3681303fbd546b818deeb9	9340914
+-> held 2m and 1m to staking and held 7m
+
 0xec85403a6a6393bfa469ab11365a5191e0da7c58	8672445
+-> split across 3 wallets
+
 0xa1b728b6d6fd3d34d2af62ea68dd0a1482650005	8538737
+-> split across 3 wallets
+
 0xa6404eceb1b9f38350436db6a849a6e9e425c591	8433549
+-> held 4m and sent 4m to airdrop 10
+
 0x4b64f76b64270c972e2158c3871ae5bdd89fc8a7	8216474
+-> split across 2 wallets
+
 0x14ecb76c29fc11b03a38566792ff3fb7be27273a	8206324
+-> sent to timelocks
+
+staked: 17 15 16 18 18 17 3.5 8 12 12 13 8 8 8 -> 173
+timelock: 10 18 4 15 2.5 9 29 10 6 7 4 8 12 12 8 3 4 10 10 10 8 -> 200
+held: 2 6 10 4 16 1 5 18 16 1.5 16 13 10 8 10 12 8 8 14 3 9 5 7 7 8 12 4 4 6 6 2 3 7 9 8 4 8 -> 290
+circ: 15 8 8 8 5 7 6 4 7 10 4 -> 82
+
+sum([float(i) for i in "17 15 16 18 18 17 3.5 8 12 12 13 8 8 8".split(' ')])
+
 0x37cb669f00adee9b359143203e40b0fde72cef68	7970991
+-> 5m held and 2m to timelock
+
 0x6a8e273c0adc9ff57638a4cb447ec5886fd5acd3	7867751
+-> stake 5m and held 2m
+
 0xb9fe7f43da1c92dc8204dc8f064a75f81b6af04b	7775891
+-> stake it all
+
 0x3b5be6ddef1435dec6303ab432a86830e6ad6926	7446369
+-> 1m and 6m to timelocks
+
 0xd233c7d07f78b74fab466aaf7e8efd08d8adbaf6	7237306
+-> 6n to timelocks
+
 0x4002fd25ec8e4ac1012f0c81feb2846cf080e997	7100285
+-> 4m held
+
 0x933dcaddd402f710f99c963c9ce309c454a65470	6797830
+-> sent to timelock
+
 0x15feaeec372fb04e43a136e6fcd225bc463a4dd9	6693484
+-> sent to timelock
+
 0xb90a6bf1ebd48f0c9c720f6ac388a9653755718f	6566484
+-> 4m held
+
 0x4c9d123911d5e1a8b58fed983997e9f658d41a0a	6545525
+-> 4m and 2m in timelock
+
 0x09994f4676a0e006acb68fcfe5e2cc80a6c81b1c	6249456
+-> 3m held and 3m in timelock
+
 0x370fb3bacdffed223ab7d9a155164d771b76f4c2	6198244
+-> 6m staking
+
 0x380ef8a593790b1553d10f9cf1813940b7301fe7	6097965
+-> 4m staking
+
 0x01be2099e1043c45221d2b3b4037472e38e50184	5844055
+-> 4m staked, 1m held
+
 0xf3d5525713488668d9406b5ea3c052dcf3ffe3fb	5807859
+-> to mms
+
 0x006b1a78e57ae93de6d59f743d2d57fc564fd2ce	5770147
+-> 2m timelocks, 4m to staked
+
 0xd4af4857e003e5ffc6da5abac7015171690d1a18	5343407
+-> 3m to Story: Airdrop (200 units) a282 and 1m held
+
 0xa81b358e9dbfc75b68606ad16031c056a686bc0d	5098208
+-> split across 2 wallets
+
 0xfc213b6ddaa860ca41831730ef6ea7d5aad9ba5b	4993327
+-> held 2m and 1m staking, 2m to timelock
+
 0x23ec44511347093f15db7a5aacdcaa20b6e2e441	4944925
+-> circ
+
 0xd9b01dd18a6274a25b3244fbd3041f8980581e8a	4913227
+-> split across 2 wallets
+
 0x41659ddc7bd4727f397bb63023261b0bb2071b51	4836091
+-> held 4m
+
 0x7bb400cfce967b11e534087b07bf3ed2084300ee	4444036
+-> held 3m
+
 0x7e5e0b400da8f1a246d2586120cf8fb16d3fa5e3	4416681
+-> held 4m
+
 0xeb04ea9d2856f48696081f4a0b2dd880d5f3104c	4390697
+-> 1m held and 3m staking
+
 0x95aa71695dfd2aa4eae1cd22d991eaf46136738b	4288816
+-> 4m held
+
 0x1d17d257e73333bb776e5e36ee71a85fb6182108	4284760
+-> 4m circ
+
 0x6677881d945bfd12195b0d51a82b7ae93a5b5c90	4282662
+-> 2m held, 1m staking, 2m circ
+
+staked: 17 15 16 18 18 17 3.5 8 12 12 13 8 8 8 -> 173
+timelock: 10 18 4 15 2.5 9 29 10 6 7 4 8 12 12 8 3 4 10 10 10 8 -> 200
+held: 2 6 10 4 16 1 5 18 16 1.5 16 13 10 8 10 12 8 8 14 3 9 5 7 7 8 12 4 4 6 6 2 3 7 9 8 4 8 -> 290
+circ: 15 8 8 8 5 7 6 4 7 10 4 -> 82
+
+staked: 5 7 6 4 4 1 3 1 -> 31
+timelock: 2 6 6 7 7 2 3 2 2 -> 37
+held: 5 2 1 4 4 4 3 1 5 2 5 4 3 4 1 4 2 -> 54
+circ: 6 5 5 4 2 -> 22
+
+staked -> 200 + 4 + 4 = 208 = 210
+timelock -> 240 + 5 + 2 + 2 + 2 + 3 + 3 + 2 = 255
+held -> 340 + 15 = 355
+circ -> 100 + 2 = 100
+= 920
+so circulating about 15%
+
+~350m units are held in wallets with strong links to the genesis wallets
+~200m units were staked from genesis wallets
+~250m units were sent to timelock vesting wallets
+~80m units are staking rewards owned by the team or investors
+~200m units remain
+so circulating about 15% (assuming the technically unlocked tokens are non-circulating)
+
+
 0x470507b37215659cecdea3b0b5c98664c86d4d2c	4163715
+-> all staked
+
 0xc6784f4655baacd7e442f77e136184d52630fb7b	3618560
+-> 2m timelock
+
 0xc1bcb18426ae962913bf2077b920569593f773e3	3477527
+-> 3m timelock
+
 0x9eceb5d7c802f02c973ccddddf1020476b5b5e1b	3476996
+-> 1m held, 2m timelock
+
 0x9312f82bb19a70f95a0eb01b3008faf71635227e	3298916
+-> 2m timelock
+
 0xd2edf454623c6ca5621efa3c55b46643d5971ea6	3172894
+-> timelock
+
 0xd01315bf073919990eee0d6cbdd771db92923bb8	3117669
+-> held 5m
+
 0x198224885c2b2332520abb3967609c19c925c047	3031411
+-> 3m timelock
+
 0xd2c87b6ee55a2cc0f009603060c36b3780e38805	2628621
+-> 2m held
+
 0x0e8f8c045e675fe55295fee1d2f4337c152ed2ff	2405426
+-> 1m held
+
 0x4421c909a7dddbad7ccc046a5ed88196a0014768	2379335
+-> 3m held, 2m stake
+
 0x9fcd40bc203b279becde168498824c61d0fe4495	2328032
+-> 2m to timelock
+
 0x166d88c8cf3e97444bb2e7db682d920d5cd8d520	2299822
+-> balance
+
 0xf1f45c6d61b0a5a4c5d86e4c923b9f0bb45732ff	1974953
+-> staked
+
 0x18ddeb46e3e774c447444c874dc1053ad3578f91	1887400
+-> held
+
 0xe0bc64c5a8ec0dcd08c185ff975e97d589e6bf87	1776242
+-> held
+
 0x1cff7365145c6db896df208c477ba5a7278c818b	1398987
+🪂Story: Airdrop (30 units) C156
+
 0x9ff045fe99554602c1ec78c4365ed2bd70591808	1139972
 
 
